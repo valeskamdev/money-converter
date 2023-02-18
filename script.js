@@ -11,7 +11,7 @@ const convertValues = () => {
   const realValue = document.getElementById("real-value");
   const currencyValue = document.getElementById("currency-value");
   const inputReal = document.getElementById("input-real").value;
-
+  
   const realToDollar = inputReal / dollar;
   const realToEuro = inputReal / euro;
   const realToIndia = inputReal / india;
@@ -92,5 +92,26 @@ const changeCurrency = () => {
   convertValues();
 };
 
+function validateMonetaryValue(event) {
+  const key = event.key;
+  const value = event.target.value;
+
+  const numericValue = parseFloat(value.replace(/[,.]/g, ''));
+
+  if (key === 'Backspace' || key === 'Delete') {
+    return true;
+  }
+
+  if ((key >= '0' && key <= '9')) {
+    return true;
+  }
+
+  event.preventDefault();
+  return false;
+}
+
+const inputReal = document.getElementById("input-real");
+
+inputReal.addEventListener('keydown', validateMonetaryValue);
 button.addEventListener("click", convertValues);
 select.addEventListener("change", changeCurrency);
